@@ -1,0 +1,47 @@
+\babel@toc {english}{}\relax 
+\babel@toc {slovene}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {slovene}{}\relax 
+\contentsline {chapter}{\numberline {1}Uvod}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Teoretične osnove in pregled literature}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Teorija asinhronega prenosa in obdelave podatkov}{3}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Osnove / Hitrostna neodvisnost}{3}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Osnovna vezja}{4}{subsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.2.1}Muller C element}{4}{subsubsection.2.1.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.2.2}Cevovodi}{5}{subsubsection.2.1.2.2}%
+\contentsline {subsubsection}{\numberline {2.1.2.3}Podatkovno procesiranje}{8}{subsubsection.2.1.2.3}%
+\contentsline {section}{\numberline {2.2}Protokoli}{8}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}4-Phase dual rail}{8}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}4-bundled data}{9}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}2-Phase dual rail}{9}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}2-bundled data}{9}{subsection.2.2.4}%
+\contentsline {section}{\numberline {2.3}Podatkovni potek}{9}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}2phase}{9}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}4phase}{9}{subsection.2.3.2}%
+\contentsline {chapter}{\numberline {3}Metodologija}{11}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Arhitektura FPGA}{11}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}FPGA Celice}{11}{subsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.1.1}LUT}{11}{subsubsection.3.1.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.1.2}FF}{12}{subsubsection.3.1.1.2}%
+\contentsline {subsection}{\numberline {3.1.2}FPGA povezave}{12}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Verilog}{12}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Implementacija}{13}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}4-Phase dual rail}{13}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}2-Phase dual rail}{13}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Implementacija cellic}{13}{subsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.3.1}Primitivi}{13}{subsubsection.3.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.3.2}Funkcionalne celice}{14}{subsubsection.3.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3.3}Vezja}{14}{subsubsection.3.3.3.3}%
+\contentsline {chapter}{\numberline {4}Rezultati}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}PIPELINE}{15}{section.4.1}%
+\contentsline {section}{\numberline {4.2}CNT}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}FIB}{15}{section.4.3}%
+\contentsline {section}{\numberline {4.4}GCD}{15}{section.4.4}%
+\contentsline {section}{\numberline {4.5}RISCV}{15}{section.4.5}%
+\contentsline {chapter}{\numberline {5}Zaključek}{17}{chapter.5}%
+\contentsline {chapter}{Literatura}{19}{section*.8}%
+\contentsline {chapter}{\numberline {A}Urejanje dokumentov z orodjem LaTeX}{23}{appendix.A}%
+\contentsline {chapter}{\numberline {B}Vključevanje slik v LaTeX dokumente}{25}{appendix.B}%
+\contentsline {chapter}{\numberline {C}Namestitev programskih orodij za urejanje LaTeX dokumentov}{27}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Sistemi Windows}{27}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Sistemi Linux}{28}{section.C.2}%

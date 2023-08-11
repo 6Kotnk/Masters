@@ -1,0 +1,29 @@
+%******************************* UVOD ******************************************
+\chapter{Uvod} \label{uvod}
+
+Digitalna vezja uporabljamo za obdelavo podatkov. Osnovna digitalna vezja glede na vhodne podatke naredijo izhodne podatke, torej nimajo spomina. Taka vezja imenujemo \textbf{kombinatorična} vezja.
+Z kombinatoričnimi vezji lahko izračunamo kar koli želimo a imamo težavo:
+
+\textbf{Velikost}: velikost kombinatoričnega vezja je v splošnem proporcionalna kvadratu števila vhodov in proporcionalna številu izhodov. Ker želimo obdelovati gigabajte podatkov in več je to jasno nesprejemljivo.
+
+Rešitev je, da kose vezja uporabimo večkrat, torej da naredimo povratno vezavo. Izhod takih vezji ni več odvisen le od vhodov, temveč tudi od stanja povratne zanke, torej imajo taka vezja spomin, imenujejo se \textbf{sekvenčna} vezja.
+
+Ampak tu se pojavi nova težava. Predstavljajmo si seštevalnik, katerega izhod povežemo na enega izmed vhodov, Na drugi vhod damo konstanto 1.
+Želeli bi si, da vezje šteje 1,2,3... Ampak to se ne zgodi, namesto tega na izhodu dobimo kaotične signale. Razlog je, da je v vezju ogromno število povratnih zank, vendar med seboj niso sinhronizirane. Zato zanke počasi zlezejo iz faze in na izhodu dobimo šum.
+
+Nujno je torej vpeljati mehanizem s katerim periodično sinhroniziramo povratne zanke. To storimo s spominskimi elementi, ki jih vstavimo v povratno vezavo, rečemo jim \textbf{registri}. Registri ne smejo prepustiti naprej novih podatkov, dokler niso stari podatki popolnoma obdelani. Efektivno ponovno sinhronizirajo faze vseh povratnih zank.
+
+Torej moramo izvedeti kdaj so podatki na vhodu registra obdelani, in podatki trenutno v registru obdelani. Takrat lahko register sprejme nove podatke.
+
+V splošnem imamo dva načina na katera lahko storimo:
+
+-Globalna sinhronizacija(Urin takt):
+	V tej shemi uporabimo predpostavko, da obdelva podatkov v \textbf{vseh} vezjih med dvema zaporednima registroma ne traja dlje od neke konstante. Vse registre nato naenktrat sinhroniziramo z to periodo.
+	
+-Lokalna sinhronizacija
+	V tej shemi sinhroniziramo vse povratne zanke na en signal. Zagotoviti moramo, da ima ta signal \textbf{najdaljšo} periodo izmed vseh povratnih zank. 
+
+
+
+
+	
