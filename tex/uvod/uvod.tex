@@ -18,7 +18,7 @@ Torej moramo izvedeti kdaj so podatki na vhodu registra obdelani, in podatki tre
 V splošnem imamo dva načina na katera lahko storimo:
 
 -Globalna sinhronizacija(Urin takt):
-	V tej shemi uporabimo predpostavko, da obdelva podatkov v \textbf{vseh} vezjih med dvema zaporednima registroma ne traja dlje od neke konstante. Vse registre nato naenktrat sinhroniziramo z to periodo.
+	V tej shemi uporabimo predpostavko, da obdelva podatkov v \textbf{vseh} vezjih med dvema zaporednima registroma ne traja dlje od neke konstante. Vse registre nato naenktrat sinhroniziramo z to periodo. To naredimo z urinim taktom. Footnote: Urin takt je generiran prek kristalnega oscilatorja ali RC oscilatorja. Vse povratne zanke v vezju nato sinhronizirano z tem oscilatorjem, ki mora imeti najdaljšo periodo.
 	
 -Lokalna sinhronizacija
 	V tej shemi sinhroniziramo vse povratne zanke na en signal. Zagotoviti moramo, da ima ta signal \textbf{najdaljšo} periodo izmed vseh povratnih zank. 

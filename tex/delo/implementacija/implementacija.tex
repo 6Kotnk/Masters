@@ -40,18 +40,23 @@ Povezave so večino površine, grejo med celicami, so programibilne, torej imajo
 	\label{fig:cell}
 \end{figure}
 
-\section{Verilog} \label{a}
+\section{Implementacija} \label{a}
+
+\subsection{Verilog} \label{b}
 Jezik za opis procesov, uporablja se za programiranje FPGA
 
-\section{Implementacija} \label{a}
+\subsection{Knjižnica} \label{b}
+Primitive, funkcionalne enote, sestava
+
+
 \subsection{4-Phase dual rail} \label{b}
 Za impelementacijo tega protokola potrebujemo posplošene C elemente, Logika je narejena iz spominskih celic, data/ null waves ect
 
 \subsection{2-Phase dual rail} \label{b}
 Podobno, kot pri 4 Phase ampak uporabljamo robove, potrebujemo več tranzistorjev za logiko, saj potrebujemo povratno informacijo, od izhodov
 
-
 \subsection{Implementacija cellic} \label{a}
+
 \subsubsection{Primitivi} \label{b}
 Imamo 5 Primitivov, iz katerih sestavimo ostalo funkcionalnost vezja:
 
@@ -74,3 +79,7 @@ FIB fibbonacci counter, 1,2,3,5,8,13 toy example predstavi inicalizacijo
 GCD, ciklična komputacija, preprostejša inicializacija
 
 RISCV čim bolj preprost processor, proof of concept
+
+
+
+

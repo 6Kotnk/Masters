@@ -1,0 +1,112 @@
+
+Če želimo zasnovati asinhrona vezja moramo zasnovati visoko nivojski pogled, podobno kot pri sinhronih vezjih. Pri sinhronih vezjih je osnovna dogma to, da imamo zaporedje registrov in logike med njimi. Na vsak pozitivni rob urinega takta, se podatki prenesejo za en register naprej. To nam dovoli, da poenostavimo zasnovo sinhronih digitalnih vezji na zaporedje matematičnih operacij.
+
+Podobno lahko storimo tudi pri asinhronih vezjih, imamo dodatne omejitve. Še vedno imamo zaporedje registrov, ter logiko med njimi, vendar se sedaj podatki ne pretakajo periodično, zato moramo zagotoviti da ne pride do zastojev.
+
+\section{Protokoli} \label{a}
+
+Najprej poglejmo kako podatke prenašamo skozi asinhrona vezja. Na sploh se protokoli deljio v dve skupini po dve skupini.
+
+\subsection{Faznost} \label{b}
+
+\begin{itemize}
+	\item 2phase hitrejsi, ampak rabimo feedback da vemo kdaj smo done
+	\item 4phase preprostejši več komunikacije
+\end{itemize}
+
+Pomislimo na mullerjev cevovod. Prenos podatkov po njem lahko gledamo na dva načina.
+Lahko gledamo na nivoje signalov. Cikel torej gre reqdata, ackdata, reqnull, acknull. V tem pogledu potujeta skozi cevovod dva valova. Prvi je podatkovni val, ki prenaša podatke. Drugi je zaključni val, ki zakjuči komunikacijo, in spravi kanal v prvotno stanje.
+
+Lahko gledamo robove signalov. Torej gledamo prenos dogodkov (pozitivni in negativni rob imata enak pomen). Torej gre samo za podatkovne valove, ki sledijo eden drugemu.
+
+
+\subsection{Podatki} \label{b}
+
+\begin{itemize}
+	\item bundled data: Podoben sinhronim vezjem, potrebuje zakasnitve, da zagotovimo časovne predpostavke.
+	\item Dual rail: Dve žici na bit, manj predpostavk
+\end{itemize}
+
+Do sedaj smo gledali cevovod le kot 1 biten podatkovni kanal. Vendar za procesiranje podatkov želimo več-bitne podatke. Cevovod lahko posplošimo na dva načina. 
+
+Lahko signale, ki potujejo po cevovodu uporabimo, za odpiranje klasičnih registrov. To pomeni da lahko uporabimo klasične registre in klasično logiko. Vendar moramo paziti, da ohranimo pot skozi cevovod najdaljšo, torej potrebujemo zakasnilne elemente.
+
+Lahko sklopimo več cevovodov skupaj. Med seboj moramo povezati povratne zanke in poskrbeti, za pravo kodiranje podatkov.
+
+\subsubsection{Kodiranje} \label{b}
+Kot vemo, moramo poskrbeti, da povratno zanko sinhroniziramo na najpočasnejši signal v zanki. To lahko zagotovimo z pravilnim kodiranjem podatkov. Koda je neodvisna od zakasnitev ko nobena kodna beseda ni vključena v drugi kodni besedi. Želimo tudi da je konkatanacija dveh kodnih besed nova kodna beseda.
+
+Imamo dva jasna kandidata
+
+\begin{itemize}
+	\item One hot quad.
+	\item Dual rail: One hot dual
+\end{itemize}
+
+One hot quad ima enako podatkovno gostoto kot dual rail, vendar ima pol manj preklopov, kar jo naredi bolj energisjko učinkovito. Vendar Nismo še našli učinkovitih impelmentacij. Zato uporabimo Dual rail.
+
+%
+%A code (I ,C) is called delay-insensitive when :MATH @ dicodes:that is, when no code word is contained in another code word
+%
+
+Poglejmo vse 4 kombinacije
+
+\subsection{4-Phase dual rail} \label{b}
+Karl Fant, dve žici na bit ect. Zelo zanesljivo, zelo velika površina.
+
+\subsection{4-bundled data} \label{b}
+klasična logika, ampak potrebujemo zakasnitve (lahko predvidimo zakasnitve)
+
+\subsection{2-Phase dual rail} \label{b}
+Ta magisterska
+
+\subsection{2-bundled data} \label{b}
+Micropipelines ect.
+
+
+\section{Cevovodi} \label{a}
+
+Linija iz knjige:
+A register may input and store a new data token from its predecessor if
+its successor has input and stored the data token that the register was pre-
+viously holding.
+
+Če pogledamo dano vezje lahko vidimo, da deluje kot 1-biten FIFO. Podatki se nalagajo noter in črpajo ven. Temu konstruktu se reče Mulerjev cevovod, in je osnova vseh asinhronih vezji.
+
+Lahko naredimo tudi obroče, Ali več sklenjenih obročov...
+
+Osnovna celica cevovoda je..., če pogledamo logične funkcije: ..., To lahko izvedemo tudi na druge načine.
+
+
+\section{Logika} \label{a}
+
+Sedaj imamo cevovode, želimo med stopnjami cevovoda procesirati podatke. Dva načina:
+\begin{itemize}
+	\item vzporedno imamo default logiko - Bundlede data
+	\item Vzporedni sklopljeni cevovodi
+\end{itemize}
+
+Vzporedno logika, timing assumptions, delays kako prožit latche, samo pol jih ima naenkrat noter data, isto kot v sinhronih vezjih.
+
+Vzporedni cevovdi, kako sklopit, kako procesirat podatke ect...
+
+%I love U <3
+
+
+
+
+
+\section{Podatkovni potek} \label{a}
+Podatki se pretakajo po asinhronih vezjih kot valovi. v eno smer gre data, v drugo gre ACK. Vedno moramo kontrolirati število podatkovnih valov v vezju ect.
+To lahko gledamo kot graf po katerem se pretekajo tokeni. 
+
+Osnova igre ect:
+
+Drugače za 2 phase kot za 4 phase:
+
+\subsection{2phase} \label{b}
+Najmanj 2 v ciklu poljubno število, inicializacija. Vrsta grafa, za to
+
+\subsection{4phase} \label{b}
+Najmanj 3 v ciklu sodo število, inicializacija. Vrsta grafa, za to
+
