@@ -43,40 +43,49 @@ Imamo dva jasna kandidata
 	\item Dual rail: One hot dual
 \end{itemize}
 
-One hot quad ima enako podatkovno gostoto kot dual rail, vendar ima pol manj preklopov, kar jo naredi bolj energisjko učinkovito. Vendar Nismo še našli učinkovitih impelmentacij. Zato uporabimo Dual rail.
+One hot quad ima enako podatkovno gostoto kot dual rail, vendar ima pol manj preklopov, kar jo naredi bolj energisjko učinkovito. Vendar nismo še našli učinkovitih impelmentacij. Zato uporabimo Dual rail.
 
 %
 %A code (I ,C) is called delay-insensitive when :MATH @ dicodes:that is, when no code word is contained in another code word
 %
 
-Poglejmo vse 4 kombinacije
+Glede na gornje izbire dobimo 4 načine implementacije asinhronih vezji. Poglejmo si osnove vseh ter pogledjmo prednosti in slabosti.
+
+\subsection{4-Phase bundled data} \label{b}
+Ta stil je najbolj podoben klasični sinhroni logiki. Uporablja Mulerjev cevovod kot osnovno vodilo podatkovnega poteka. Na ta cevovod pripnemo navadne zapahe skozi katere pretekajo podatki. Med zapahe lahko vstavimo klasično logiko, a moramo paziti, da vsatvimo v Mullerjev cevovod zadostne zakasnitve, da zagotovimo dovolj časa, da se signali propagirajo skozi logiko. Ker je protokol 
+
+\subsection{2-Phase bundled data} \label{b}
+Ta stil je podoben 4-Phase bundled data, saj enako uporablja Mullerjev cevovod kot vodilo podatkov in klasično logiko. Ker uporablja 2 fazni protokol predstavljajo preklopi na cevovodu podatke o stanju cevovoda. Zato potrebujemo posebne zapahe, ki so odprti, ko sta stanja trenutne in naslednje stopnje cevovoda različni, sicer pa je zaprt. Tak protokol je hitrejši in bolj energetsko učikovit, prednost je tudi, da ne potrebujemo asimetričnih zakasnitev. Slabost so tudi posebni zapahi, ki niso del večine knjižnjic.
 
 \subsection{4-Phase dual rail} \label{b}
-Karl Fant, dve žici na bit ect. Zelo zanesljivo, zelo velika površina.
-
-\subsection{4-bundled data} \label{b}
-klasična logika, ampak potrebujemo zakasnitve (lahko predvidimo zakasnitve)
+Ta stil uporablja dual rail komunikacijo, kar prinese veliko overhead saj moramo uporabiti dvakrat več linij za podatkovne povezave in moramo vgraditi spominske celice v samo kombinatorično logiko. Druga stran je izjemna zanesljivost protokola, ki je dosežena popolnoma brez zakasnitev. Edina časovna predpostavka so nekatere isohronične veje, ki so zelo lahko izpolnjene
 
 \subsection{2-Phase dual rail} \label{b}
-Ta magisterska
+Ta magisterska naloga se nanaša na implementacijo tega stila komunikacije. Je podoben 4-Phase dual rail, ampak namesto uporablja 2 fazni protokol, torej pridobimo na hitrosti in energijski učinkovitosti. Slabost je, da je povšina takšne izvedbe daleč največja. V nadaljnih poglavjih, se fokusiramo na prednosti in slabosti tega stila, ter njegovi detajli.
 
-\subsection{2-bundled data} \label{b}
-Micropipelines ect.
+
 
 
 \section{Cevovodi} \label{a}
 
-Linija iz knjige:
-A register may input and store a new data token from its predecessor if
-its successor has input and stored the data token that the register was pre-
-viously holding.
+Cevovodi so osnovni arhitekturni element podatkovnega prenosa. Sestavljeni so iz zaporedja spominskih elementov, ki posredujejo podatke iz prejšnjega v naslednjega.
 
-Če pogledamo dano vezje lahko vidimo, da deluje kot 1-biten FIFO. Podatki se nalagajo noter in črpajo ven. Temu konstruktu se reče Mulerjev cevovod, in je osnova vseh asinhronih vezji.
+Glavno pravilo cevovodov je sledeče:
+Register lahko shrani nov podatek od svojega prednjika, če je njegov naslednjik shranil podatek, ki ga trenutno vsebuje.
 
-Lahko naredimo tudi obroče, Ali več sklenjenih obročov...
 
-Osnovna celica cevovoda je..., če pogledamo logične funkcije: ..., To lahko izvedemo tudi na druge načine.
 
+%Linija iz knjige:
+%A register may input and store a new data token from its predecessor if
+%its successor has input and stored the data token that the register was pre-
+%viously holding.
+%
+%Če pogledamo dano vezje lahko vidimo, da deluje kot 1-biten FIFO. Podatki se nalagajo noter in črpajo ven. Temu konstruktu se reče Mulerjev cevovod, in je osnova vseh asinhronih vezji.
+%
+%Lahko naredimo tudi obroče, Ali več sklenjenih obročov...
+%
+%Osnovna celica cevovoda je..., če pogledamo logične funkcije: ..., To lahko izvedemo tudi na druge načine.
+%
 
 \section{Logika} \label{a}
 
