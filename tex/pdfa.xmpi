@@ -75,15 +75,15 @@
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/"> 
    <xmp:CreatorTool>LaTeX with hyperref</xmp:CreatorTool> 
-   <xmp:ModifyDate>2023-08-17T21:57:27+02:00</xmp:ModifyDate> 
-   <xmp:CreateDate>2023-08-17T21:57:27+02:00</xmp:CreateDate> 
-   <xmp:MetadataDate>2023-08-17T21:57:27+02:00</xmp:MetadataDate> 
+   <xmp:ModifyDate>2023-08-28T16:42:55+02:00</xmp:ModifyDate> 
+   <xmp:CreateDate>2023-08-28T16:42:55+02:00</xmp:CreateDate> 
+   <xmp:MetadataDate>2023-08-28T16:42:55+02:00</xmp:MetadataDate> 
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmpRights = "http://ns.adobe.com/xap/1.0/rights/"> 
   </rdf:Description> 
   <rdf:Description rdf:about="" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"> 
    <xmpMM:DocumentID>uuid:A6EC0694-BE8F-381E-F78D-CD4821D08C63</xmpMM:DocumentID> 
-   <xmpMM:InstanceID>uuid:36F32601-27AD-A157-F944-5E27D8ACA592</xmpMM:InstanceID> 
+   <xmpMM:InstanceID>uuid:D09415CE-1AD3-FF43-74B5-2877FE96FC99</xmpMM:InstanceID> 
   </rdf:Description> 
  </rdf:RDF> 
 </x:xmpmeta> 

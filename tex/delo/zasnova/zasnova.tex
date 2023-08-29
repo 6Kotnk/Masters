@@ -73,6 +73,28 @@ Cevovodi so osnovni arhitekturni element podatkovnega prenosa. Sestavljeni so iz
 Glavno pravilo cevovodov je sledeče:
 Register lahko shrani nov podatek od svojega prednjika, če je njegov naslednjik shranil podatek, ki ga trenutno vsebuje.
 
+Osnovna implementacija enobitnega cevovoda v asinhronih vezjih je seveda Mullerjev cevovod. Če želimo cevovod posplošiti na več bitov lahko signalizacijo preprosto uporabimo za odpiranje navadnih registrov v bundled data stilu. 
+
+Poglejmo si bolj detajlno posplošitev za dual rail sisteme.
+
+Po Mullerjevem ceovodu, potujejo dogodki, ki pa nimajo vrednosti. Poglejmo si, kako poslati eno bitno vrednost.
+
+Za to uporabimo dva vzporedna Mullerjeva cevovoda. Po enem bo tekel podatek za vrednost 0, po drugem podatek za vrednost 1. Povratni zanki obeh sihnalov moramo združiti, saj dobimo vedno signal le po eni izmed vej.
+
+Implementacija 4fazne signalizacije, je veliko bolj preprosta kot 2fazne. Če uporabimo nadaljno transformacijo, lahko vezje poenstavimo. Izhodno vezje, je večbitna verzija Mousetrap vezja.Cite Mousetrap.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{slike/CtoD}
+	\caption{}
+	\label{fig:celement}
+\end{figure}
+
+Poglejmo si detejlno delovanje vezja. Sprememba pride po enem izmed cevovodov. Nato se sprememba propagira naprej, če je prostor in povratna informacija je poslana nazaj. V tej celotni verigi, Časovni zamiki niso važni za delovanje vezja. Vezje deluje pravilno po sami zasnovi (Seveda moramo biti pozorni na same časovne zahteve osnovnih elementov).
+
+Tu spet vidimo veliko slabost dual rail, saj je potrebno več kot 2x več logike, za navaden cevovod.
+
+Če želimo poslati večbiten podatek, uporabimo več enobitnih cevovodov. Povratne zanke skupaj vežemo s C elemnti, saj moramo tokrat sinhronizirati povratne zanke vseh enobitnih cevovodov.
 
 
 %Linija iz knjige:
@@ -89,15 +111,21 @@ Register lahko shrani nov podatek od svojega prednjika, če je njegov naslednjik
 
 \section{Logika} \label{a}
 
-Sedaj imamo cevovode, želimo med stopnjami cevovoda procesirati podatke. Dva načina:
-\begin{itemize}
-	\item vzporedno imamo default logiko - Bundlede data
-	\item Vzporedni sklopljeni cevovodi
-\end{itemize}
+Logika je osnovni element podatkovnega procesiranja. Kot vhod ima dva ali več podatkov, kot izhod pa en podatek.
+Kot vemo lahko vsa logična vezja implementiramo z NAND vrati, zato si poglejmo izdelavo NAND logičnih vrat.
 
-Vzporedno logika, timing assumptions, delays kako prožit latche, samo pol jih ima naenkrat noter data, isto kot v sinhronih vezjih.
+V bundled data stilu, so NAND vrata implemntirana v klasičnem načinu npr CMOS. Poglejmo si implementacijo v dual rail stilu.
 
-Vzporedni cevovdi, kako sklopit, kako procesirat podatke ect...
+Osnovna ideja je podobna, kot implementacija klasičnih kombinatornih vezij z ALI/IN matriko. Najprej imamo detektor za vsako možno vhodno kombinacijo(IN), nato izhode teh detektorjev kombiniramo(ALI) skladno z našo pravilnostno tabelo.
+
+Pri 4 phase stilu to implementiramo z uporabo C elementov za detektorje vhodne kombinacije in ali vrat za kombinacijo teh izhodov. Tu se je pomembno zavedati, da niso vse možne vhodne kombinacije veljavne in zato zaznavamo le kombinacije, ki so veljavne.
+
+Pri 2-faznem stilu uporabimo podobno implementacijo, vendar moramo vhode C elementov sami ponastaviti, da ne ostanejo nekateri detektorji le delno aktivirani. To storimo z XOR vrati, ki jih postavimo za vhode. Ker vemo točno katera kombinacija vhodov je bila detektirana, lahko ponastavimo le tiste vhode, ki so bili aktivirani.
+
+Za 4 fazna vezja obstaja tudi način optimizacije logičnih vezji citeNCL. 
+V NCL logiki gledamo na C elemente in ALI vrata kot poseben primer N od M prestopnih vrat. S tem posplošenim naborom vrat lahko načrtamo kombinacijska vezja z veliko manjšim številom tranzistorjev oziroma v našem primeru, manjšim številom celic.
+
+
 
 %I love U <3
 
@@ -106,16 +134,65 @@ Vzporedni cevovdi, kako sklopit, kako procesirat podatke ect...
 
 
 \section{Podatkovni potek} \label{a}
-Podatki se pretakajo po asinhronih vezjih kot valovi. v eno smer gre data, v drugo gre ACK. Vedno moramo kontrolirati število podatkovnih valov v vezju ect.
-To lahko gledamo kot graf po katerem se pretekajo tokeni. 
 
-Osnova igre ect:
+Premikanje podatkov povezju je podatkovni potek. Za obravnavo podatkovnega poteka, nas zanimajo le registri, ter povezave med njimi, saj so logični elementi prozorni (podatke obdelajo, a ne vplivajo na njihovo pot skozi vezje).
 
-Drugače za 2 phase kot za 4 phase:
+V sekvenčnih vezjih se podatki premikajo iz enega zapaha v naslednjega.
+ Footnote: Registri so narejeni iz para zapahov. Lahko uporabimo tudi samo zapahe in jih prožimo z alternirajočo fazo ure. Iz tega je razvidno, da za sinhrona vezja potrebijemo v ciklu vedno sodo število zapahov. 
+Za pravilno delovanje mora vezje zagotavljati naslednjim zahtevam: 
+
+\begin{itemize}
+	\item Podatki ne izginjajo
+	\item Podatki se ne pojavljajo iz nikoder
+	\item Zaporedje podatkov je konsistentno.
+\end{itemize}
+
+Podatkovni pretok je pri asinhronih vezjih podoben kot pri sinhronih vezjih vendar obstajajo pomembne razlike. 
+V sinhronih vezjih so v registrih vedno veljavni podatki in lahko se zanašamo na hitrost pretoka podatkov po vezju. Vsi podatki se ob urinem ciklu premaknejo za en register naprej.
+V asinhronih vezjih potujejo podatki kot kot valovi. V eno smer potujejo valovi podatkov, v nasprotno smer pa potujejo valovi potrdil, ki signalizirajo sprembo podatkov. 
+
+Število teh valov v vezju je pomembno, saj niso vse konfiguracije ustrezne. Če so na primer vsi zapahi zasedeni z podatki, se ne more noben podatek premakniti, kar ustavi celotno vezje. Če ni nobenega podatka, vezje jasno ne more delovati. Poglejmo si pravila ki jim vezja morajo slediti in pravila po katerih se podatki obnašajo v vezjih.
+
+
+%Podatki se pretakajo po asinhronih vezjih kot valovi. v eno smer gre data, v drugo gre ACK. Vedno moramo kontrolirati število podatkovnih valov v vezju ect.
+%To lahko gledamo kot graf po katerem se pretekajo tokeni. 
+%
+%Osnova igre ect:
+%
+%Drugače za 2 phase kot za 4 phase:
+
+\subsection{Gradniki} \label{b}
+Logični potek vezji gradimo iz majhne skupine gradnikov, ki zagotavljajo možnost zasnove velike večine vezji.
+
+
+\subsubsection{Registri, izvori in ponori} \label{c}
+Registri so glavni del vezja, ki diktirajo potek podatkov. 
+Linearnem zaporedju registrov rečemo cevovod. Cevovodi služijo obdelavi podatkov v večih stopnjah tako, da med njih damo logične bloke, ali pomnilniku, da naredimo pretok podatkov skozi vezje bolj fleksibilno.
+Zaporedju registrov, kjer je zadnji register v zaporedju povezan z prvim pravimo obroč. Take strukture so uporabne za iterativne izračune.
+
+Izvori so viri podatkov. Ko dobijo potrdiev generirajo podatek. Ponori so nasprotje, vhodne podatke zavžejo in oddajo potrditev. Izvori in ponori pogosto prestavljajo mejo med vezjem in okoljem a ne vedno. Izvori predstavljajo tudi npr. konstante.
+
+\subsubsection{Podvojitve in sinhronizacija} \label{c}
+Podvojitve so deli vezja, kjer je podatek dupliciran in posredovan dvema registroma. Potrditve slednjih registrov sta združeni, torej potrebujemo potrditev obeh nadaljnih pretokov.
+Sinhraonizacija je nasprotna operacija, kjer se dva podatka združita v enega. Tu čakamo, da so prisotni vsi vhodni podatki, preden nadaljujemo. Tu so ponavadi logični bloki.
+
+
+\subsubsection{Razcepi in sponi} \label{c}
+Razcepi so del vezji, kjer en podatkovni tok narekuje pot drugemu podatkovnemu toku. Je podoben multiplekserju, vendar multiplekser odda na vseh izhodih podatke (na ne izbranih izhodih je podatek 0) medtem, ko razcep posreduje podatek na le en izhod.
+
+Spon je obratna operacija, kjer se dva pretoka podatkov združita. Tu ne čakamo vseh virov, vsak podatek preprosto posredujemo naprej.
+
 
 \subsection{2phase} \label{b}
-Najmanj 2 v ciklu poljubno število, inicializacija. Vrsta grafa, za to
+V dvofaznih protokolih, se v vezju pretakajo le podatkov. Vsak cikel mora imeti vsakj dva zapaha. Enega za podatkovni val in drugega, v katerega se podatkovni val premakne.
 
 \subsection{4phase} \label{b}
-Najmanj 3 v ciklu sodo število, inicializacija. Vrsta grafa, za to
+Štirifazni protokoli so sicer identični dvofaznim, z razliko, da se po vezju pretakajo pari podatkov in ponastavitev. Iz tega razloga potrebuje vsak cikel vsaj 3 registre. Enega za podatek, enega za ponastavitev in enega, ki je prazen, da se vanj premakne podatek oz. ponastavitev.
+
+\subsection{Inicializacija} \label{b}
+Inicializacija vezja je vredna bližjega pogleda.
+Če v inicaliziranem vezju ni podatkovnih valov lahko vezje preprosto inicializiramo tako, da vse spominske elemente postavimo na 0.
+
+Če pa imamo v inicaliziranem vezju podatkovne valove, moramo poskrbeti za pravilno inicializacijo zapahov in povratnih zank. TODO add specifics maybe or cut
+
 
